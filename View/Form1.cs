@@ -44,18 +44,10 @@ namespace Trabalho02
 
         private void btninserir_Click(object sender, EventArgs e)
         {
-            int pontuacao = TabuleiroController.ConferePalavra(txtpalavra.Text.ToString().ToUpper());
+            int pontuacao = TabuleiroController.ConferePalavra(txtpalavra.Text.ToString().ToUpper());           
             if (pontuacao == -1)
             {
-                MessageBox.Show("ALGUMA DAS LETRAS NÃO EXISTE!\nPOR FAVOR, INSIRA APENAS LETRAS VÁLIDAS!");
-            }
-            else if (pontuacao == -2)
-            {
-                MessageBox.Show("ALGUMA DAS LETRAS INSERIDAS ESTÁ REPETIDA!");
-            }
-            else if (pontuacao == -3)
-            {
-                MessageBox.Show("ESSA PALAVRA OU SUA PARTE VÁLIDA JÁ FOI INSERIDA ANTERIORMENTE!");
+                MessageBox.Show("ESSA PALAVRA JÁ FOI INSERIDA ANTERIORMENTE!");
             }
             else
             {
