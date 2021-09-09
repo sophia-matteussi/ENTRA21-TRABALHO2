@@ -55,15 +55,11 @@ namespace Trabalho02
             }
             else if (pontuacao == -3)
             {
-                MessageBox.Show("ESSA PALAVRA JÁ FOI INSERIDA ANTERIORMENTE!");
-            }
-            else if (pontuacao == -4)
-            {
-                MessageBox.Show("PALAVRA INVÁLIDA!\nALGUMA DAS LETRAS NÃO É ADJACENTE DE SUA ANTERIOR!");
+                MessageBox.Show("ESSA PALAVRA OU SUA PARTE VÁLIDA JÁ FOI INSERIDA ANTERIORMENTE!");
             }
             else
             {
-                MessageBox.Show("PALAVRA VÁLIDA!");
+                MessageBox.Show("VOCÊ GANHOU " + pontuacao + " PONTO(S)");
                 pontuacao += Convert.ToInt32(lblpontuacao.Text.ToString());
                 lblpontuacao.Text = pontuacao.ToString();
                 txtpalavra.Clear();
@@ -90,6 +86,7 @@ namespace Trabalho02
             lblMOQ.Text = PreencheTabuleiro[2][0].ToString();
             lblNTP.Text = PreencheTabuleiro[2][1].ToString();
             lblRSZ.Text = PreencheTabuleiro[2][2].ToString();
+            lbpalavrasinseridas.Items.Clear();
         }
     }
 }

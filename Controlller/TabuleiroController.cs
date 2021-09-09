@@ -71,7 +71,7 @@ namespace Trabalho02.Controlller
             return true; //Retorna true caso todas as letras da palavra existam na matriz;
         }
 
-        public static bool MapeamentoPalavra(string palavra) //Função que irá conferir se as letras estão no raio uma das outras => é adjacente? => Faz mapeamento;
+        public static int MapeamentoPalavra(string palavra) //Função que irá conferir se as letras estão no raio uma das outras => é adjacente? => Faz mapeamento;
         {
             int x = -1; //linha;
             int y = -1; //coluna;
@@ -102,18 +102,18 @@ namespace Trabalho02.Controlller
                             {
                                 if (palavra[l + 1] == tabuleiro.Matriz[x + i][y + j]) //Checa se a letra ao redor é igual a próxima letra da palavra;
                                 {
-                                    adjacente = true; //Se for adjacente, retorna true;
+                                    adjacente = true; //Se for adjacente, true;
                                 }
                             }
                         }
                     }
                 }
-                if (!adjacente) //Confere se for adjacente, retorna false se não for;
+                if (!adjacente) //Confere se for adjacente;
                 {
-                    return false;
+                    return l;
                 }
             }
-            return true;
+            return palavra.Length;
         }
 
         public static int ContaPontuacao(string palavra) //Função que faz a contagem da pontuação do jogador, caso a palavra esteja correta;
@@ -133,7 +133,6 @@ namespace Trabalho02.Controlller
         /// -1 = Letra não existe;
         /// -2 = Letra Repetida;
         /// -3 = Palavra repetida;
-        /// -4 = Palavra inválida;
         /// </summary>
         /// <param name="palavra"></param>
         /// <returns></returns>
@@ -148,17 +147,25 @@ namespace Trabalho02.Controlller
                 if (confere)
                 {
                     confere = ConferePalavraRepetida(palavra); //Função que confere se a palavra inserida pelo jogador já está na lista de palavras inseridas;
-                    if (confere)
+                    if (confere)//Se der true, todos os anteriores deram também, assim irá:
                     {
-                        confere = MapeamentoPalavra(palavra); //Função que irá conferir se as letras estão no raio uma das outras => é adjacente? => Faz mapeamento;
-                        if (confere) //Se der true, todos os anteriores deram também, assim irá:
+                        //ultimaLetra se refere a ultima letra encontrada no mapeamento;
+                        int ultimaLetra = MapeamentoPalavra(palavra); //Função que irá conferir se as letras estão no raio uma das outras => é adjacente? => Faz mapeamento;
+                        if (ultimaLetra == palavra.Length) 
                         {
                             tabuleiro.Palavras.Add(palavra); //adiciona palavra para persistência;
                             return ContaPontuacao(palavra); //retornará apenas a pontuação do jogador;
                         }
                         else
                         {
-                            return -4;
+                            //irá mandar uma substring (palavra contida dentro da string);
+                            confere = ConferePalavraRepetida(palavra.Substring(0, ultimaLetra + 1)); //confere se a parte válida da palavra já foi inserida;
+                            if (!confere) 
+                            {
+                                return -3;
+                            }
+                            tabuleiro.Palavras.Add(palavra.Substring(0, ultimaLetra + 1));
+                            return ContaPontuacao(palavra.Substring(0,ultimaLetra + 1));
                         }
                     }
                     else
